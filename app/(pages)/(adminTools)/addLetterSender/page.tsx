@@ -1,4 +1,5 @@
 import LogoutButton from "@/components/childComponent/LogoutButton";
+import LetterSenderForm from "@/components/parentComponent/LetterSenderForm";
 
 export default function AddLetterSender() {
   return (
@@ -6,6 +7,7 @@ export default function AddLetterSender() {
       <LogoutButton />
       <div className="flex flex-col items-center justify-center min-h-screen">
         <h1 className="text-2xl font-bold mb-4">Criar Remente</h1>
+        <LetterSenderForm />
       </div>
     </div>
   );

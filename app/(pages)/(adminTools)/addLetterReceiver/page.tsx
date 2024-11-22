@@ -1,5 +1,5 @@
 import LogoutButton from "@/components/childComponent/LogoutButton";
-import LetterReceiverForm from "@/components/parentComponent/LetterReceiverForm";
+import LetterReceiverForm from "@/components/parentComponent/(adminTools)/LetterReceiverForm";
 
 export default function AddLetterReceiver() {
   return (

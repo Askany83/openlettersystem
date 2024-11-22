@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import usePostRequest from "@/services/usePostRequest";
+import usePostRequest from "@/services/(httpMethods)/usePostRequest";
 
 const LetterSenderForm = () => {
   const [formData, setFormData] = useState({ name: "", surname: "" });

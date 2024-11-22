@@ -1,10 +1,11 @@
 import { connectMongoDB } from "@/dbConnet";
 import { NextResponse } from "next/server";
 
-// Named export for GET method
+// This is a test route to check if the database is connected
+
 export const GET = async () => {
   try {
-    await connectMongoDB(); // Establish connection to MongoDB
+    await connectMongoDB();
     return new NextResponse(
       JSON.stringify({ message: "Successfully connected to MongoDB" }),
       {

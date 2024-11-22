@@ -15,7 +15,8 @@ export async function POST(req: NextRequest) {
     }
 
     const { name, surname, job } = data;
-    console.log("Received data:", { name, surname, job });
+
+    // console.log("Received data:", { name, surname, job });
 
     if (!name || !surname || !job) {
       return NextResponse.json(
@@ -29,9 +30,6 @@ export async function POST(req: NextRequest) {
       surname,
       job,
     };
-
-    console.log("Name: ", name);
-    console.log("Surname: ", surname);
 
     await connectMongoDB();
 

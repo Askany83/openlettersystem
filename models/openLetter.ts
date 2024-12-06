@@ -11,8 +11,6 @@ const openLetterSchema = new Schema(
     message: {
       type: String,
       required: true,
-      minlength: 200,
-      maxlength: 2000,
     },
     letterSender: {
       type: Schema.Types.ObjectId,

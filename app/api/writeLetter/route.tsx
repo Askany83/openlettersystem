@@ -1,10 +1,11 @@
 import OpenLetter from "@/models/openLetter";
 import { NextRequest, NextResponse } from "next/server";
+import { connectMongoDB } from "@/dbConnet";
 
 export async function POST(req: NextRequest) {
   try {
     const letterData = await req.json();
-    console.log(letterData);
+    console.log("letterData: ", letterData);
 
     const { title, message, letterSenderId, letterReceiverId } = letterData;
 
@@ -15,9 +16,16 @@ export async function POST(req: NextRequest) {
       letterReceiver: letterReceiverId,
     });
 
-    await newLetter.save();
+    await connectMongoDB();
+    const savedLetter = await newLetter.save();
 
-    return NextResponse.json({ message: "Success" }, { status: 200 });
+    return NextResponse.json(
+      {
+        message: "Success",
+        letterId: savedLetter._id,
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error processing letter submission:", error);
     return NextResponse.json(

@@ -7,6 +7,7 @@ export interface LetterReceiver {
 }
 
 export interface LetterData {
+  _id?: string;
   title: string;
   message: string;
   letterReceiverId: string;

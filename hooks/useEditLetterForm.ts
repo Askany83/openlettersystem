@@ -1,7 +1,7 @@
-"use client";
 import { useState, useEffect } from "react";
 import { LetterData, LetterReceiver } from "@/interfaces/systemInterfaces";
 import { fetchAndDecodeLetter } from "@/services/(cacheMethods)/fetchAndDecodeLetter";
+import { getLetter } from "@/services/(cacheMethods)/getLetter";
 import { gzip } from "zlib";
 import { promisify } from "util";
 import { updateLetterInSessionStorage } from "@/services/(cacheMethods)/updateLetter";
@@ -39,8 +39,8 @@ export default function useEditLetterForm(letterId: string) {
     const fetchLetterData = async () => {
       setIsFetching(true);
       const data = await fetchAndDecodeLetter(letterId);
-      setLetterData(data);
       if (data.letter) {
+        setLetterData(data);
         setFormData({
           title: data.letter.title,
           message: data.decodedMessage,

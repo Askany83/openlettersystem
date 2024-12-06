@@ -12,4 +12,9 @@ export interface LetterData {
   message: string;
   letterReceiverId: string;
   letterSenderId: string;
+  updatedAt?: string;
+}
+
+export interface ViewLetterReceiverProps {
+  letterReceiverId: string;
 }

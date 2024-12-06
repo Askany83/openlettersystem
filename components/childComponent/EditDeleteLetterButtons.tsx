@@ -13,9 +13,16 @@ export default function EditDeleteLetterButton({
 
   const handleEdit = () => {
     console.log("Edit button clicked");
-    // Implement the logic to edit the letter here
+    router.push(`/editLetterNumber/${letterId}`);
   };
   const handleDelete = async () => {
+    const isConfirmed = window.confirm(
+      "Tem a certeza que quer apagar esta Carta Aberta?"
+    );
+
+    if (!isConfirmed) {
+      return;
+    }
     setErrorMessage(null);
     const error = await deleteLetter(letterId);
     if (error) {

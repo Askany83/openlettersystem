@@ -1,5 +1,4 @@
 import { LetterData, LetterReceiver } from "@/interfaces/systemInterfaces";
-import { getAllLetterReceiversInCache } from "./getAllLetterReceiversInCache";
 import { promisify } from "util";
 import { gunzip } from "zlib";
 
@@ -19,7 +18,7 @@ export const getLetter = async (
     );
 
     console.log(
-      "Attempting to find open letters of receiver in sessionStorage:",
+      "Attempting to find open letters of receiver in sessionStorage - openLettersOfReceiver:",
       openLettersOfReceiver
     );
 
@@ -35,6 +34,13 @@ export const getLetter = async (
           // Letter found in sessionStorage
           setLetter(foundLetter);
 
+          console.log(
+            "Letter found in sessionStorage - setFoundLetter 1:",
+            foundLetter.letterReceiver
+          );
+
+          setReceiver(foundLetter.letterReceiver);
+
           // Extract base64 data from message and decompress it
           const base64Data = foundLetter.message.split(",")[1];
           const compressedData = Buffer.from(base64Data, "base64");
@@ -46,18 +52,47 @@ export const getLetter = async (
           // Set the decoded message
           setDecodedMessage(decodedMessage);
 
-          // Set the receiver based on the letterReceiverId, ensuring all required properties are present
-          getAllLetterReceiversInCache(receiverData.letterReceiverId).then(
-            (receiver) => {
-              setReceiver(receiver);
-            }
-          );
-
           // Set the sender of the letter
           setSender(foundLetter.letterSender);
 
-          console.log("Letter found in sessionStorage:", foundLetter);
+          console.log(
+            "Letter found in sessionStorage - openLettersOfReceiver:",
+            foundLetter
+          );
           return;
+        } else {
+          //check in sessionStorage.myLetters if !foundLetter in openLettersOfReceiver
+          const myLetters = sessionStorage.getItem("myLetters");
+          if (myLetters) {
+            const parsedMyLetters = JSON.parse(myLetters);
+            for (const letterData of parsedMyLetters) {
+              if (letterData._id === _id) {
+                setLetter(letterData);
+                console.log(
+                  "Letter found in sessionStorage - myLetters:",
+                  letterData
+                );
+                // Extract base64 data from message and decompress it
+                const base64Data = letterData.message.split(",")[1];
+                const compressedData = Buffer.from(base64Data, "base64");
+                const gunzipAsync = promisify(gunzip);
+                const decompressedBuffer = await gunzipAsync(compressedData);
+                const decodedMessage = decompressedBuffer.toString();
+                setDecodedMessage(decodedMessage);
+                setReceiver(letterData.letterReceiverId);
+                console.log(
+                  "LetterReceiver found in sessionStorage - myLetters:",
+                  letterData.letterReceiverId
+                );
+                setSender(letterData.letterSenderId);
+                console.log(
+                  "letterSender found in sessionStorage:",
+                  letterData.letterSenderId
+                );
+                return;
+              }
+            }
+          }
         }
       }
     }

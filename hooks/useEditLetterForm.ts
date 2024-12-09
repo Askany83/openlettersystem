@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { LetterData, LetterReceiver } from "@/interfaces/systemInterfaces";
 import { fetchAndDecodeLetter } from "@/services/(cacheMethods)/fetchAndDecodeLetter";
-import { getLetter } from "@/services/(cacheMethods)/getLetter";
 import { gzip } from "zlib";
 import { promisify } from "util";
 import { updateLetterInSessionStorage } from "@/services/(cacheMethods)/updateLetter";

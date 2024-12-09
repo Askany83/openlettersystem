@@ -13,9 +13,23 @@ export const fetchAndDecodeLetter = async (
     const storedLetters = JSON.parse(
       sessionStorage.getItem("myLetters") || "[]"
     );
-    const foundLetter = storedLetters.find(
+    let foundLetter = storedLetters.find(
       (letter: LetterData) => letter._id === _id
     );
+
+    // If not found in "myLetters", check in "openLettersOfReceiver"
+    if (!foundLetter) {
+      const openLettersOfReceiver = JSON.parse(
+        sessionStorage.getItem("openLettersOfReceiver") || "[]"
+      );
+
+      for (const receiverData of openLettersOfReceiver) {
+        foundLetter = receiverData.data.find(
+          (letter: LetterData) => letter._id === _id
+        );
+        if (foundLetter) break;
+      }
+    }
 
     if (foundLetter) {
       // Extract base64 data
@@ -27,13 +41,27 @@ export const fetchAndDecodeLetter = async (
       const decompressedBuffer = await gunzipAsync(compressedData);
       const decodedMessage = decompressedBuffer.toString();
 
-      // Get receiver data
+      // Get receiver data from cache
       const receivers = JSON.parse(
         sessionStorage.getItem("allLetterReceiversInCache") || "[]"
       );
-      const receiver = receivers.find(
+      let receiver = receivers.find(
         (r: LetterReceiver) => r._id === foundLetter.letterReceiverId
       );
+
+      // If receiver is not found in "allLetterReceiversInCache", check in "openLettersOfReceiver"
+      if (!receiver) {
+        const openLettersOfReceiver = JSON.parse(
+          sessionStorage.getItem("openLettersOfReceiver") || "[]"
+        );
+
+        for (const receiverData of openLettersOfReceiver) {
+          if (receiverData.letterReceiverId === foundLetter.letterReceiverId) {
+            receiver = receiverData;
+            break; // Exit loop once the receiver is found
+          }
+        }
+      }
 
       // Ensure receiver has required fields for ReadLetterNumber component
       if (receiver) {

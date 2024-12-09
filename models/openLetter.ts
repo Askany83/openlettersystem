@@ -17,7 +17,7 @@ const openLetterSchema = new Schema(
       ref: "LetterSender",
       required: true,
     },
-    letterReceiver: {
+    letterReceiverId: {
       type: Schema.Types.ObjectId,
       ref: "LetterReceiver",
       required: true,

@@ -28,7 +28,6 @@ export function updateStoredLetters(
   );
 
   openLettersOfReceiver.push({
-    letterReceiverId,
     data: letters,
   });
 

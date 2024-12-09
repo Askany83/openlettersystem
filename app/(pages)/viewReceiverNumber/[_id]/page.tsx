@@ -1,6 +1,6 @@
 import LogoutButton from "@/components/childComponent/LogoutButton";
 import NavButton from "@/components/childComponent/NavButton";
-import ViewLetterReciever from "@/components/parentComponent/ViewLetterReceiver";
+import ViewLetterReceiver from "@/components/parentComponent/ViewLetterReceiver";
 
 export default function viewReceiverNumber({
   params,
@@ -20,7 +20,7 @@ export default function viewReceiverNumber({
         <h1 className="text-2xl font-bold mb-4">
           Destinatário nº {letterReceiverId}
         </h1>
-        <ViewLetterReciever letterReceiverId={letterReceiverId} />
+        <ViewLetterReceiver letterReceiverId={letterReceiverId} />
       </div>
     </div>
   );

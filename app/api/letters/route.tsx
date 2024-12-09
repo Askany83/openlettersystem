@@ -7,11 +7,11 @@ export const GET = async (req: NextRequest) => {
     await connectMongoDB();
     console.log("on get letters api route");
     const parsedUrl = new URL(req.url, "http://localhost:3000/");
-    const letterReceiverId = parsedUrl.searchParams.get("receiverId");
-    console.log("letterReceiverId xY:", letterReceiverId);
+    const letterReceiver = parsedUrl.searchParams.get("receiverId");
+    console.log("letterReceiver xY:", letterReceiver);
 
     const lettersForReceiver = await OpenLetter.find({
-      letterReceiver: letterReceiverId,
+      letterReceiver: letterReceiver,
     });
     return new NextResponse(JSON.stringify(lettersForReceiver), {
       status: 200,

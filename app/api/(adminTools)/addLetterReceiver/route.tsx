@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import { connectMongoDB } from "@/dbConnet";
-import LetterReceiver from "@/models/letterReceiver";
+import LetterReceiver from "@/models/letterReceiverId";
 
 export async function POST(req: NextRequest) {
   try {

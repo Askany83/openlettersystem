@@ -8,12 +8,13 @@ export async function POST(req: NextRequest) {
     console.log("letterData: ", letterData);
 
     const { title, message, letterSenderId, letterReceiverId } = letterData;
+    console.log("letterData: ", letterData);
 
     const newLetter = new OpenLetter({
       title,
       message,
       letterSender: letterSenderId,
-      letterReceiver: letterReceiverId,
+      letterReceiverId: letterReceiverId,
     });
 
     await connectMongoDB();

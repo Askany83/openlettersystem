@@ -5,14 +5,15 @@ import OpenLetter from "@/models/openLetter";
 export const GET = async (req: NextRequest) => {
   try {
     await connectMongoDB();
-    console.log("on get letters api route");
+
     const parsedUrl = new URL(req.url, "http://localhost:3000/");
     const letterReceiver = parsedUrl.searchParams.get("receiverId");
-    console.log("letterReceiver xY:", letterReceiver);
+    console.log("receiverId - GET:", letterReceiver);
 
     const lettersForReceiver = await OpenLetter.find({
-      letterReceiver: letterReceiver,
+      letterReceiverId: letterReceiver,
     });
+    console.log("lettersForReceiver - GET:", lettersForReceiver.length);
     return new NextResponse(JSON.stringify(lettersForReceiver), {
       status: 200,
     });

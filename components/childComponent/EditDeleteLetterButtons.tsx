@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
-import { deleteLetter } from "@/services/(httpMethods)/deleteLetter";
+// import { deleteLetter } from "@/services/(httpMethods)/deleteLetter";
 import { useRouter } from "next/navigation";
+import { OpenLetter } from "@/utils/openLetter";
 
 export default function EditDeleteLetterButton({
   letterId,
@@ -15,6 +16,7 @@ export default function EditDeleteLetterButton({
     console.log("Edit button clicked");
     router.push(`/editLetterNumber/${letterId}`);
   };
+
   const handleDelete = async () => {
     const isConfirmed = window.confirm(
       "Tem a certeza que quer apagar esta Carta Aberta?"
@@ -24,11 +26,23 @@ export default function EditDeleteLetterButton({
       return;
     }
     setErrorMessage(null);
-    const error = await deleteLetter(letterId);
-    if (error) {
-      setErrorMessage(error);
-    } else {
-      router.push("/allLetterReceivers");
+    console.log("Attempting to delete");
+
+    try {
+      // Create an OpenLetter instance
+      const openLetter = new OpenLetter(letterId, "", "", "", "");
+
+      // Call the deleteOne method
+      const error = await openLetter.deleteOne();
+
+      if (error) {
+        setErrorMessage(error);
+      } else {
+        router.push("/allLetterReceivers");
+      }
+    } catch (error) {
+      console.error("Error in deleting letter:", error);
+      setErrorMessage("Erro ao apagar a carta.");
     }
   };
 

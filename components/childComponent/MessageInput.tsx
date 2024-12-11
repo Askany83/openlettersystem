@@ -1,17 +1,18 @@
-interface MessageInputProps {
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-}
+import { MessageInputProps } from "@/interfaces/systemInterfaces";
 
-const MessageInput: React.FC<MessageInputProps> = ({ value, onChange }) => {
+const MessageInput: React.FC<MessageInputProps> = ({
+  name,
+  value,
+  onChange,
+}: MessageInputProps) => {
   return (
     <div>
       <label htmlFor="message" className="block text-gray-700 font-medium mb-2">
-        Corpo da carta
+        <b>Corpo da carta</b>
       </label>
       <textarea
         id="message"
-        name="message"
+        name={name}
         value={value}
         onChange={onChange}
         rows={6}

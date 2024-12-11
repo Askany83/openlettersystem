@@ -1,23 +1,24 @@
 "use client";
-import NavButton from "@/components/childComponent/NavButton";
+import { ReceiverService } from "@/utils/receiverServices";
 import { useState, useEffect } from "react";
+import NavButton from "@/components/childComponent/NavButton";
+import Spinner from "@/components/childComponent/Spinner";
+import RenderFullName from "@/components/childComponent/RenderFullName";
+import RenderProfilePic from "@/components/childComponent/RenderProfilePic";
 import { LetterReceiver } from "@/interfaces/systemInterfaces";
-import { fetchReceivers } from "@/services/(httpMethods)/fetchReceivers";
-import RenderFullName from "../childComponent/RenderFullName";
-import RenderProfilePic from "../childComponent/RenderProfilePic";
-import Spinner from "../childComponent/Spinner";
 
-export default function AllLetterReceivers() {
+export default function ReceiverCard() {
   const [receivers, setReceivers] = useState<LetterReceiver[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const loadReceivers = async () => {
-      await fetchReceivers(setReceivers);
+      const receiverService = new ReceiverService();
+      await receiverService.viewAllReceivers(setReceivers);
       setIsLoading(false);
     };
     loadReceivers();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (isLoading) {
     return <Spinner />;
@@ -28,11 +29,12 @@ export default function AllLetterReceivers() {
       {receivers.map((receiver) => (
         <div
           key={receiver._id}
-          className="bg-white rounded-lg shadow-md overflow-hidden"
+          className="bg-white/50 backdrop-blur-md rounded-lg shadow-lg overflow-hidden"
         >
           <RenderProfilePic />
           <RenderFullName {...receiver} />
-          <div className="flex flex-row gap-4 mt-4 justify-center p-4">
+
+          <div className="flex flex-row gap-4 justify-center pb-4">
             <NavButton
               href={`/viewReceiverNumber/${receiver._id}`}
               className="w-36"

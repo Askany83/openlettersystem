@@ -4,6 +4,7 @@ interface NavButtonProps {
   href: string;
   children: React.ReactNode;
   className?: string;
+  onClick?: () => void;
 }
 
 export default function NavButton({

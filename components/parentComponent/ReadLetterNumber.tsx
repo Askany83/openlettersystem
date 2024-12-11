@@ -1,74 +1,82 @@
 "use client";
-
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import RenderFullName from "@/components/childComponent/RenderFullName";
+import RenderProfilePic from "@/components/childComponent/RenderProfilePic";
+import EditDeleteLetterButton from "@/components/childComponent/EditDeleteLetterButtons";
+import FormattedDate from "@/components/childComponent/FormattedDate";
 import Spinner from "@/components/childComponent/Spinner";
-import { LetterData, LetterReceiver } from "@/interfaces/systemInterfaces";
-import RenderProfilePic from "../childComponent/RenderProfilePic";
-import EditDeleteLetterButton from "../childComponent/EditDeleteLetterButtons";
-import { getLetter } from "@/services/(cacheMethods)/getLetter";
+import { LetterReceiver } from "@/interfaces/systemInterfaces";
+import { OpenLetter } from "@/interfaces/systemInterfaces";
+import { fetchLetterData } from "@/services/(cacheMethods)/fetchLetterData";
 
-interface ReadLetterNumberProps {
+export default function ReadLetterNumber({
+  _id,
+  onReceiverLoaded,
+}: {
   _id: string;
-}
-
-export default function ReadLetterNumber({ _id }: ReadLetterNumberProps) {
-  const [letter, setLetter] = useState<LetterData | null>(null);
-  const [decodedMessage, setDecodedMessage] = useState<string>("");
+  onReceiverLoaded: (receiver: LetterReceiver | null) => void; // New prop to pass receiver data up
+}) {
+  const letterId = _id;
+  const [letter, setLetter] = useState<OpenLetter | null>(null);
   const [receiver, setReceiver] = useState<LetterReceiver | null>(null);
-  const [sender, setSender] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [message, setMessage] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getLetter(
-      _id,
+    fetchLetterData(
+      letterId,
       setLetter,
-      setDecodedMessage,
       setReceiver,
-      setSender,
-      setLoading
+      setMessage,
+      setUserId,
+      setIsLoading
     );
-  }, [_id]);
+  }, [letterId]);
 
-  if (loading) {
-    return <Spinner />;
-  }
-
-  if (!letter || !receiver) {
-    return <div>Carta não encontrada</div>;
-  }
-
-  const loginUserUID = sessionStorage.getItem("loginUserUID");
-  console.log("UID vs sender", loginUserUID, sender);
+  useEffect(() => {
+    if (receiver) {
+      onReceiverLoaded(receiver);
+    }
+  }, [receiver, onReceiverLoaded]);
 
   return (
     <>
-      <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
-        <div className="mb-4 flex items-center space-x-4 w-1/2 mx-auto">
-          <div className="w-96 h-44">
-            <RenderProfilePic />
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <div className="bg-white/65 backdrop-blur-md rounded-lg shadow-lg overflow-hidden p-4 w-full md:w-1/2 mx-auto">
+          <div className="flex justify-center ">
+            <div className="flex flex-row items-center gap-4 w-96 bg-white">
+              <RenderProfilePic />
+              {receiver && (
+                <RenderFullName
+                  _id={receiver._id}
+                  name={receiver.name}
+                  surname={receiver.surname}
+                  job={receiver.job}
+                />
+              )}
+            </div>
           </div>
-          <div>
-            <h2 className="text-xl font-semibold">
-              {receiver.name} {receiver.surname}
-            </h2>
-            <p className="text-gray-600">{receiver.job}</p>
+          <div className="mt-4 mb-4 ">
+            <h2 className="text-xl font-bold">{letter?.title}</h2>
+            <br />
+            {letter?.updatedAt && (
+              <FormattedDate updatedAt={letter.updatedAt} />
+            )}
+            <br />
+            <p>{message || "A carregar..."}</p>
           </div>
           <br />
+          <div className="flex justify-center">
+            {(letter?.senderId === userId ||
+              letter?.letterSender === userId) && (
+              <EditDeleteLetterButton letterId={letter.id as string} />
+            )}
+          </div>
         </div>
-        <br />
-        <h2 className="text-xl font-semibold">Título: {letter.title}</h2>
-        <br />
-        <div className="prose max-w-none">
-          <p className="whitespace-pre-wrap">{decodedMessage}</p>
-        </div>
-        <br />
-        <div className="flex justify-center">
-          {(letter.letterSenderId === loginUserUID ||
-            sender === loginUserUID) && (
-            <EditDeleteLetterButton letterId={letter._id as string} />
-          )}
-        </div>
-      </div>
+      )}
     </>
   );
 }

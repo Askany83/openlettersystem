@@ -7,7 +7,7 @@ export const GET = async () => {
     await connectMongoDB();
     const receivers = await LetterReceiver.find();
 
-    console.log(receivers);
+    console.log("receivers - back: ", receivers);
 
     return new NextResponse(JSON.stringify(receivers), {
       status: 200,

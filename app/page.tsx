@@ -1,23 +1,13 @@
-import LoginUserId from "@/components/childComponent/LoginUserId";
-import NavButton from "@/components/childComponent/NavButton";
+import InitialBackgroundImage from "@/components/childComponent/InitialBackgroundImage";
+import MockupLogin from "@/components/parentComponent/MockupLogin";
 
 export default function RegisterAndLogin() {
-  // There are two buttons that are commented
-  // It's not a good way to do it
-  // But it's a quick way to add new letter sender and receiver
-
-  const userUID = "673f7b91233a733fa2872709";
-
   return (
-    <div className="bg-gray-100 p-5">
-      <div className="space-x-4">
-        {/* <NavButton href="/addLetterSender">Criar Remente</NavButton>
-        <NavButton href="/addLetterReceiver">Criar Destinatário</NavButton> */}
-      </div>
-      <div className="flex flex-col items-center justify-center min-h-screen">
-        <h1 className="text-2xl font-bold mb-4">Register and Login</h1>
-        <LoginUserId userUID={userUID} />
-        <NavButton href="/homepage">Entrar</NavButton>
+    <div className="relative bg-gray-100 p-5 min-h-screen">
+      <InitialBackgroundImage />
+      <div className="space-x-4"></div>
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen">
+        <MockupLogin />
       </div>
     </div>
   );

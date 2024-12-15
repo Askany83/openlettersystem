@@ -31,6 +31,9 @@ export default function ViewReceiverNumber() {
           <NavButton className="w-36" href="/allLetterReceivers">
             Destinatários
           </NavButton>
+          <NavButton href={`/writeOpenLetterTo/${_id}`} className="w-36">
+            Escrever Carta
+          </NavButton>
         </div>
         <div className="flex flex-col items-center justify-start min-h-screen">
           <h1 className="text-2xl font-bold mb-4">

@@ -45,7 +45,7 @@ export default function ReadLetterNumber({
       {isLoading ? (
         <Spinner />
       ) : (
-        <div className="bg-white/65 backdrop-blur-md rounded-lg shadow-lg overflow-hidden p-4 w-full md:w-1/2 mx-auto">
+        <div className="bg-white/80 backdrop-blur-md rounded-lg shadow-lg overflow-hidden w-full md:w-1/2 mx-auto">
           <div className="flex justify-center ">
             <div className="flex flex-row items-center gap-4 w-96 bg-white">
               <RenderProfilePic />
@@ -59,7 +59,7 @@ export default function ReadLetterNumber({
               )}
             </div>
           </div>
-          <div className="mt-4 mb-4 ">
+          <div className="mt-4 mb-4 p-5">
             <h2 className="text-xl font-bold">{letter?.title}</h2>
             <br />
             {letter?.updatedAt && (
@@ -69,7 +69,7 @@ export default function ReadLetterNumber({
             <p>{message || "A carregar..."}</p>
           </div>
           <br />
-          <div className="flex justify-center">
+          <div className="flex justify-center pb-4">
             {(letter?.senderId === userId ||
               letter?.letterSender === userId) && (
               <EditDeleteLetterButton letterId={letter.id as string} />

@@ -90,12 +90,12 @@ export default function LetterForm({ receiver }: LetterFormProps) {
           <Spinner />
         </div>
       ) : (
-        <div className="bg-white/30 backdrop-blur-md rounded-lg shadow-lg overflow-hidden">
+        <div className="bg-white/80 backdrop-blur-md rounded-lg shadow-lg overflow-hidden">
           <div className="flex flex-row items-center gap-4 w-96 bg-white">
             <RenderProfilePic />
             <RenderFullName {...receiver} />
           </div>
-          <form onSubmit={handleSubmit} className="p-4 space-y-4 ">
+          <form onSubmit={handleSubmit} className="p-5 space-y-4 ">
             <TitleInput
               name="title"
               value={letter.title}

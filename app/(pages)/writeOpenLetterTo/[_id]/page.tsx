@@ -42,7 +42,7 @@ export default function WriteOpenLetter() {
             Destinatários
           </NavButton>
         </div>
-        <div className="flex flex-col items-center justify-Start min-h-screen">
+        <div className="flex flex-col items-center justify-start min-h-screen">
           <h1 className="text-2xl font-bold mb-4">Escrever Carta Aberta</h1>
           {receiverId && <LetterForm receiver={receiverId} />}
         </div>

@@ -1,16 +1,12 @@
-import Image from "next/image";
-import postCard from "@/public/backgroundAfterLogin.jpg";
+// import postCard from "@/public/backgroundAfterLogin.jpg";
 
 const BackgroundImageAfterLogin = () => {
   return (
-    <Image
-      alt="Background"
-      src={postCard}
-      placeholder="blur"
-      quality={100}
-      fill
-      sizes="100vw"
-      style={{ objectFit: "cover" }}
+    <div
+      className="fixed inset-0 w-full h-screen bg-cover bg-no-repeat"
+      style={{
+        backgroundImage: `url('/backgroundAfterLogin.jpg')`,
+      }}
     />
   );
 };

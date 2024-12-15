@@ -29,7 +29,7 @@ export default function ReceiverCard() {
       {receivers.map((receiver) => (
         <div
           key={receiver._id}
-          className="bg-white/50 backdrop-blur-md rounded-lg shadow-lg overflow-hidden"
+          className="bg-white/80 backdrop-blur-md rounded-lg shadow-lg overflow-hidden"
         >
           <RenderProfilePic />
           <RenderFullName {...receiver} />

@@ -36,7 +36,7 @@ export default function MockupLogin() {
       alert("Login Successful - Utilizador: André Carvalho");
       sessionStorage.setItem("loginUserId", "673f7b91233a733fa2872709");
       router.push("/homepage");
-    } else if (formData.name === "oOutro" && formData.password === "12345") {
+    } else if (formData.name === "Outro" && formData.password === "12345") {
       setError(null);
       alert("Login Successful - Ana Diaz");
       sessionStorage.setItem("loginUserId", "673f7cc3233a733fa287270b");
@@ -48,8 +48,8 @@ export default function MockupLogin() {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white/30 backdrop-blur-md rounded-lg shadow-lg overflow-hidden">
-      <h1 className="text-2xl font-bold mb-4">Register and Login</h1>
+    <div className="max-w-md mx-auto p-6 bg-white/80 backdrop-blur-md rounded-lg shadow-lg overflow-hidden">
+      <h1 className="text-2xl font-bold mb-4 text-center">OLSv0.1 Login</h1>
       <br />
       <form onSubmit={handleSubmit}>
         {/* Name Field */}
@@ -57,7 +57,7 @@ export default function MockupLogin() {
           <label htmlFor="name">Name</label>
           <br />
           <input
-            className="text-gray-500 mt-3 p-1 bg-white/30 backdrop-blur-md rounded-lg w-full"
+            className="text-gray-700 mt-3 p-2 bg-white rounded-lg shadow-lg w-full"
             type="text"
             id="name"
             name="name"
@@ -72,7 +72,7 @@ export default function MockupLogin() {
           <label htmlFor="password">Password</label>
           <br />
           <input
-            className="text-gray-500 mt-3 p-1 bg-white/30 backdrop-blur-md rounded-lg w-full"
+            className="text-gray-700 mt-3 p-2 bg-white rounded-lg shadow-lg w-full"
             type="password"
             id="password"
             name="password"
